@@ -26,8 +26,6 @@ else
     Console.WriteLine("Вставте текст:");
     Text = IsString(Console.ReadLine()).Trim();
 }
-
-
 Console.WriteLine("Выберите номер пункта чтобы:\n" +
     "\t 1.  Найти слова, содержащие максимальное количество цифр.\n" +
     "\t 2.  Найти самое длинное слово и определить, сколько раз оно встретилось в тексте.\n" +
@@ -199,16 +197,23 @@ static void LongestWord(string text)
         }
     }
     Console.Write("Длинные слова: ");
-    for (int j = 1; j < word.Length; j++)
+    string tmp1="";
+    for (int j = 0; j < word.Length; j++)
     {
         if (tmp.Equals(word[j])) k++;
+            
 
-        if (word[j].Length == len)
-            Console.Write($" {word[j]},");
+        if (!(word[j].Equals(tmp)) & word[j].Length == len)
+        {
+            tmp1+= word[j];
+        }
+        
+
     }
+
+    Console.Write($"{tmp} {tmp1}");
     Console.WriteLine();
-
-
+    Console.Write($"Слово {tmp} встречается в тексте {k} раз. ");
 
 }
 //Поиск слов содержащих максимальное количество цифр версия 1.2
@@ -311,6 +316,7 @@ static void ShowOffers(string text)
         }
         x = '!';
         y = '?';
+        Console.WriteLine();
         Console.WriteLine("Восклицательные предложения:");
     }
     //foreach (string r in offers)
