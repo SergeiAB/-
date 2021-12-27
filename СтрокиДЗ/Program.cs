@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 int itemConsole;
 string Text = string.Empty;
-
+// Console.Title = "Домашнее задание №3";
 Console.Title = "Домашнее задание №3";
 Console.WriteLine("Выберите:\n" +
     "\t1. Считать текст из файла.\n" +
