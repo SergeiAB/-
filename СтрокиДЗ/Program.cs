@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
 int itemConsole;
 string Text = string.Empty;
+string strPath;
 // Console.Title = "Домашнее задание №3";
 Console.Title = "Домашнее задание №3";
 Console.WriteLine("Выберите:\n" +
@@ -13,13 +15,31 @@ do
     itemConsole = IsNumber(Console.ReadLine());
     if (itemConsole == 1 || itemConsole == 2) continue;
     Console.WriteLine("Выберите пункты 1 или 2");
-
+    Console.Write("Ваш выбор: ");
 } while (itemConsole < 1 || itemConsole > 2);
 
 
 if (itemConsole == 1)
 {
-    Console.WriteLine("Read Faile");
+    Console.WriteLine("Укажите путь к файлу например \"D:\\учеба\\TheText.txt\" ");
+    bool Flag;
+    do
+    {
+        Console.Write("Загрузить текстовый файл: ");
+       strPath = IsString(Console.ReadLine()).Trim();
+        if (File.Exists(strPath))
+        {
+            Text = System.IO.File.ReadAllText(strPath);
+            Flag = false;
+        }
+        else
+        {
+            Console.WriteLine($"Неправильно указан путь \"{strPath}\" или файл не существует!!! ");
+            Flag = true;
+        }
+            
+
+    } while (Flag);
 }
 else
 {
@@ -35,10 +55,9 @@ Console.WriteLine("Выберите номер пункта чтобы:\n" +
     "\t 6.  Найти слова, начинающиеся и заканчивающиеся на одну и ту же букву");
 Console.Write("Ваш выбор: ");
 
-//itemConsole = IsNumber(Console.ReadLine());
+
 do
 {
-
     itemConsole = IsNumber(Console.ReadLine());
     if (itemConsole >= 1 & itemConsole <= 6) continue;
     Console.WriteLine("Выберите пункты 1-6");
@@ -197,6 +216,7 @@ static void LongestWord(string text)
             len = tmp.Length; // определение длинны слова
         }
     }
+    Console.WriteLine("*********");
     Console.Write($"Слова с наибольшим количеством символов - {len} : ");
     
     for (int j = 0; j < word.Length; j++)//запись максимальнно длинных слов без повторений
@@ -215,7 +235,8 @@ static void LongestWord(string text)
     {
         string[] Arr = Array.FindAll(word,x=> x==strWord[i]);//находим в массиве текста длинные слова и записываем в массив
         k=Arr.Length;//длинна массива есть количество повторений
-         Console.WriteLine($"Слово {strWord[i]} встречается в тексте {k} раз(а). ");
+        Console.WriteLine("****");
+        Console.WriteLine($"Слово {strWord[i]} встречается в тексте {k} раз(а). ");
     }
    
    
@@ -228,6 +249,7 @@ static void MaxNumbersss(string text)
     int max = 0, k;
     string[] words = text.Split();
     char[] sumb = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    Console.WriteLine("*********");
     Console.Write("Слова с цифрами в тексте: ");
     for (int i = 0; i < words.Length; i++)
     {
@@ -246,11 +268,11 @@ static void MaxNumbersss(string text)
             temp += words[i] + " ";
         }
     }
-    Console.WriteLine();
+    Console.WriteLine("*********");
     Console.WriteLine($"Максимольное количество цифр в словах {max}.");
     temp = temp.Trim();
     words = temp.Split();// создаем массив из слов с цифрами
-    Console.WriteLine();
+    Console.WriteLine("*********");
     Console.Write("Наибольшее количество цифр в следующих словах: ");
     for (int i = 0; i < words.Length; i++)
     {
@@ -294,6 +316,7 @@ static void DigitToWord(string text)
     }
 
     tmp = String.Join(" ", word);
+    Console.WriteLine("*********");
     Console.WriteLine($"Новый текст:\n\t{tmp}");
 
 
@@ -303,6 +326,7 @@ static void ShowOffers(string text)
 {
     char x = '?';
     char y = '!';
+    Console.WriteLine("*********");
     Console.WriteLine("Вопросительные предложения:");
     for (int j = 0; j < 2; j++)
     {
@@ -321,7 +345,7 @@ static void ShowOffers(string text)
         }
         x = '!';
         y = '?';
-        Console.WriteLine();
+        Console.WriteLine("*********");
         Console.WriteLine("Восклицательные предложения:");
     }
     //foreach (string r in offers)
@@ -330,6 +354,7 @@ static void ShowOffers(string text)
 //Выводит на экран только предложения, не содержащие запятых.
 static void NoCommaSentence(string text)
 {
+    Console.WriteLine("*********");
     Console.WriteLine("Предложения не содержащие запятые:");
     string[] words = text.Split('.','!','?');
     for(int i=0; i < words.Length; i++)
@@ -345,6 +370,6 @@ static void StartEndLetter(string text)
     string[] word = text.Split('.', '?', '!', ',', ':', ';', '\"', ' ');
    
     string[] TheWords = Array.FindAll(word, x => x.Length>1 && (x[0] == x[^1]));
-    
-    Console.WriteLine(String.Join("__",TheWords));
+    Console.WriteLine("*********");
+    Console.WriteLine($"Найденные слова: {String.Join(", ",TheWords)}");
 }
