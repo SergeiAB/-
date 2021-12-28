@@ -65,11 +65,11 @@ switch (itemConsole)
         break;
 
     case 5:
-        Console.WriteLine("Вы выбрали " + itemConsole);
+        NoCommaSentence(Text);
         break;
 
     case 6:
-        Console.WriteLine("Вы выбрали " + itemConsole);
+        StartEndLetter(Text);
         break;
 }
 
@@ -184,36 +184,41 @@ static void MaxNumbers(string text)
 //Поиск длинного слова и определить, сколько раз оно встретилось в тексте
 static void LongestWord(string text)
 {
-    int k = 0;
+    int k = 0,n=0;
     int len = 0;
+    // массив из строки с удалением знаков препинания
     string[] word = text.Split('.', '?', '!', ',', ':', ';', '\"', ' ');
     string tmp = word[0];
     for (int i = 1; i < word.Length; i++)
-    {
-        if (word[i].Length > tmp.Length)
+    {                                       
+        if (word[i].Length > tmp.Length) //сравнение длинны слов
         {
-            tmp = word[i];
-            len = tmp.Length;
+            tmp = word[i]; // слова наибольшей длинны
+            len = tmp.Length; // определение длинны слова
         }
     }
-    Console.Write("Длинные слова: ");
-    string tmp1="";
-    for (int j = 0; j < word.Length; j++)
+    Console.Write($"Слова с наибольшим количеством символов - {len} : ");
+    
+    for (int j = 0; j < word.Length; j++)//запись максимальнно длинных слов без повторений
+                                         // в одну строку через пробел
     {
-        if (tmp.Equals(word[j])) k++;
-            
-
-        if (!(word[j].Equals(tmp)) & word[j].Length == len)
-        {
-            tmp1+= word[j];
-        }
-        
-
+        if (word[j].Length == len && tmp.IndexOf(word[j])==-1)
+            tmp+=" "+ word[j];
     }
-
-    Console.Write($"{tmp} {tmp1}");
-    Console.WriteLine();
-    Console.Write($"Слово {tmp} встречается в тексте {k} раз. ");
+    
+    tmp = tmp.Trim();
+    
+        Console.Write($"{tmp}");
+        Console.WriteLine();
+    string[] strWord=tmp.Split(' ');//запись в массив длинных слов без повторений
+    for (int i = 0; i < strWord.Length; i++)
+    {
+        string[] Arr = Array.FindAll(word,x=> x==strWord[i]);//находим в массиве текста длинные слова и записываем в массив
+        k=Arr.Length;//длинна массива есть количество повторений
+         Console.WriteLine($"Слово {strWord[i]} встречается в тексте {k} раз(а). ");
+    }
+   
+   
 
 }
 //Поиск слов содержащих максимальное количество цифр версия 1.2
@@ -303,15 +308,15 @@ static void ShowOffers(string text)
     {
         int index;
         string tmp;
-        string[] offers = text.Split(x);
-        char[] symb = new char[] { y, '.' };
+        string[] offers = text.Split(x);//создаем массив с разделителем х=? или х=!
+        char[] symb = new char[] { y, '.' };//массив символов
         for (int i = 0; i < offers.Length; i++)
         {
             tmp = offers[i];
-            index = tmp.Length - 1;
-            if (char.IsPunctuation(tmp[index])) continue;
-            index = offers[i].LastIndexOfAny(symb);
-            offers[i] = offers[i].Substring(index + 2);
+            index = tmp.Length - 1;//идекс последнего символа строки
+            if (char.IsPunctuation(tmp[index])) continue;//если последний символ строки массива знак пунктуации пропускаем итерацию
+            index = offers[i].LastIndexOfAny(symb);//от конца предложения находим первое вхождение точки
+            offers[i] = offers[i].Substring(index + 2);//обрезаем строку массива получая искомое предложение
             Console.WriteLine($"{offers[i]}{x}");
         }
         x = '!';
@@ -321,4 +326,25 @@ static void ShowOffers(string text)
     }
     //foreach (string r in offers)
     //    Console.WriteLine($"{r.Trim()}\n");
+}
+//Выводит на экран только предложения, не содержащие запятых.
+static void NoCommaSentence(string text)
+{
+    Console.WriteLine("Предложения не содержащие запятые:");
+    string[] words = text.Split('.','!','?');
+    for(int i=0; i < words.Length; i++)
+    {
+        if(words[i].IndexOf(',')==-1)//выводит те предложения где нет входящих запятых
+            Console.WriteLine(words[i]+'.');
+    }
+}
+//Найти слова, начинающиеся и заканчивающиеся на одну и ту же букву.
+static void StartEndLetter(string text)
+{
+    // массив из строки с удалением знаков препинания
+    string[] word = text.Split('.', '?', '!', ',', ':', ';', '\"', ' ');
+   
+    string[] TheWords = Array.FindAll(word, x => x.Length>1 && (x[0] == x[^1]));
+    
+    Console.WriteLine(String.Join("__",TheWords));
 }
