@@ -27,7 +27,7 @@ if (itemConsole == 1)
     {
         Console.Write("Загрузить текстовый файл: ");
        strPath = IsString(Console.ReadLine()).Trim();
-        if (File.Exists(strPath))
+        if (File.Exists(strPath)||Directory.Exists(strPath))
         {
             Text = System.IO.File.ReadAllText(strPath);
             Flag = false;
@@ -56,7 +56,7 @@ Console.WriteLine("Выберите номер пункта чтобы:\n" +
 Console.Write("Ваш выбор: ");
 
 
-do
+do//проверка на правильность выбора пунктов 1-6
 {
     itemConsole = IsNumber(Console.ReadLine());
     if (itemConsole >= 1 & itemConsole <= 6) continue;
@@ -64,7 +64,7 @@ do
 
 } while (itemConsole < 1 || itemConsole > 6);
 
-switch (itemConsole)
+switch (itemConsole)// выбор соответствующего метода
 {
     case 1:
 
@@ -247,7 +247,7 @@ static void MaxNumbersss(string text)
 {
     string temp = "";
     int max = 0, k;
-    string[] words = text.Split();
+    string[] words = text.Split('.', '?', '!', ':', ';', '\"', ' ');
     char[] sumb = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     Console.WriteLine("*********");
     Console.Write("Слова с цифрами в тексте: ");
@@ -268,11 +268,11 @@ static void MaxNumbersss(string text)
             temp += words[i] + " ";
         }
     }
-    Console.WriteLine("*********");
+    Console.WriteLine();
     Console.WriteLine($"Максимольное количество цифр в словах {max}.");
     temp = temp.Trim();
     words = temp.Split();// создаем массив из слов с цифрами
-    Console.WriteLine("*********");
+    Console.WriteLine();
     Console.Write("Наибольшее количество цифр в следующих словах: ");
     for (int i = 0; i < words.Length; i++)
     {
