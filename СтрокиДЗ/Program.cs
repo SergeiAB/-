@@ -266,13 +266,13 @@ static void MaxNumbersss(string text)
 {
     string temp = "";
     int max = 0, k;
-    string[] words = text.Split('.', '?', '!', ':', ';', '\"', ' ');
+    string[] words = text.Split('.', '?', '!', ':', ';', '\"', ' ','(',')');
     char[] sumb = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     Console.WriteLine("*********");
     Console.Write("Слова с цифрами в тексте: ");
     for (int i = 0; i < words.Length; i++)
     {
-        if (words[i].IndexOfAny(sumb) != -1)// ищем слова в которых есть хотяба 1 цифра
+        if (words[i].IndexOfAny(sumb) != -1)// ищем слова в которых есть хотябы 1 цифра
         {
             k = 0;
             string tmp = words[i];
