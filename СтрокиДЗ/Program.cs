@@ -3,6 +3,7 @@
 int itemConsole;
 string Text = string.Empty;
 string strPath;
+bool Out=true;
 // Console.Title = "Домашнее задание №3";
 Console.Title = "Домашнее задание №3";
 Console.WriteLine("Выберите:\n" +
@@ -46,51 +47,69 @@ else
     Console.WriteLine("Вставте текст:");
     Text = IsString(Console.ReadLine()).Trim();
 }
-Console.WriteLine("Выберите номер пункта чтобы:\n" +
-    "\t 1.  Найти слова, содержащие максимальное количество цифр.\n" +
-    "\t 2.  Найти самое длинное слово и определить, сколько раз оно встретилось в тексте.\n" +
-    "\t 3.  Заменить цифры от 0 до 9 на слова «ноль», «один», …, «девять».\n" +
-    "\t 4.  Вывести на экран сначала вопросительные, а затем восклицательные предложения.\n" +
-    "\t 5.  Вывести на экран только предложения, не содержащие запятых.\n" +
-    "\t 6.  Найти слова, начинающиеся и заканчивающиеся на одну и ту же букву");
-Console.Write("Ваш выбор: ");
 
-
-do//проверка на правильность выбора пунктов 1-6
+do
 {
-    itemConsole = IsNumber(Console.ReadLine());
-    if (itemConsole >= 1 & itemConsole <= 6) continue;
-    Console.WriteLine("Выберите пункты 1-6");
+    Console.WriteLine("Выберите номер пункта чтобы:\n" +
+        "\t 1.  Найти слова, содержащие максимальное количество цифр.\n" +
+        "\t 2.  Найти самое длинное слово и определить, сколько раз оно встретилось в тексте.\n" +
+        "\t 3.  Заменить цифры от 0 до 9 на слова «ноль», «один», …, «девять».\n" +
+        "\t 4.  Вывести на экран сначала вопросительные, а затем восклицательные предложения.\n" +
+        "\t 5.  Вывести на экран только предложения, не содержащие запятых.\n" +
+        "\t 6.  Найти слова, начинающиеся и заканчивающиеся на одну и ту же букву.");
+    Console.Write("Ваш выбор: ");
 
-} while (itemConsole < 1 || itemConsole > 6);
 
-switch (itemConsole)// выбор соответствующего метода
-{
-    case 1:
+    do//проверка на правильность выбора пунктов 1-6
+    {
+        itemConsole = IsNumber(Console.ReadLine());
+        if (itemConsole >= 1 & itemConsole <= 6) continue;
+        Console.WriteLine("Выберите пункты 1-6");
 
-        MaxNumbersss(Text);
-        break;
+    } while (itemConsole < 1 || itemConsole > 6);
 
-    case 2:
-        LongestWord(Text);
-        break;
+    switch (itemConsole)// выбор соответствующего метода
+    {
+        case 1:
 
-    case 3:
-        DigitToWord(Text);
-        break;
+            MaxNumbersss(Text);
+            break;
 
-    case 4:
-        ShowOffers(Text);
-        break;
+        case 2:
+            LongestWord(Text);
+            break;
 
-    case 5:
-        NoCommaSentence(Text);
-        break;
+        case 3:
+            DigitToWord(Text);
+            break;
 
-    case 6:
-        StartEndLetter(Text);
-        break;
-}
+        case 4:
+            ShowOffers(Text);
+            break;
+
+        case 5:
+            NoCommaSentence(Text);
+            break;
+
+        case 6:
+            StartEndLetter(Text);
+            break;
+    }
+
+    Console.WriteLine("----------------");
+    Console.WriteLine("Продолжить работу с текстом, выберите 1.\n" +
+        "Выйти из приложения, выберите 2.");
+    do
+    {
+        itemConsole = IsNumber(Console.ReadLine());
+        if (itemConsole == 1 || itemConsole == 2) continue;
+        Console.WriteLine("Выберите  1 или 2");
+        Console.Write("Ваш выбор: ");
+    } while (itemConsole < 1 || itemConsole > 2);
+    if (itemConsole == 2) Out = false;
+
+} while (Out);
+
 
 // проверка пустой строки, пробелов
 static string IsString(string str)
@@ -330,26 +349,29 @@ static void ShowOffers(string text)
     Console.WriteLine("Вопросительные предложения:");
     for (int j = 0; j < 2; j++)
     {
+        if (j == 1)
+        {
+            x = '!';
+            y = '?';
+            Console.WriteLine("*********");
+            Console.WriteLine("Восклицательные предложения:");
+        }
         int index;
         string tmp;
         string[] offers = text.Split(x);//создаем массив с разделителем х=? или х=!
         char[] symb = new char[] { y, '.' };//массив символов
-        for (int i = 0; i < offers.Length; i++)
-        {
-            tmp = offers[i];
-            index = tmp.Length - 1;//идекс последнего символа строки
-            if (char.IsPunctuation(tmp[index])) continue;//если последний символ строки массива знак пунктуации пропускаем итерацию
-            index = offers[i].LastIndexOfAny(symb);//от конца предложения находим первое вхождение точки
-            offers[i] = offers[i].Substring(index + 2);//обрезаем строку массива получая искомое предложение
-            Console.WriteLine($"{offers[i]}{x}");
-        }
-        x = '!';
-        y = '?';
-        Console.WriteLine("*********");
-        Console.WriteLine("Восклицательные предложения:");
+            for (int i = 0; i < offers.Length; i++)
+            {
+             tmp = offers[i];
+             index = tmp.Length - 1;//идекс последнего символа строки
+             if (char.IsPunctuation(tmp[index])) continue;//если последний символ строки массива знак пунктуации пропускаем итерацию
+             index = offers[i].LastIndexOfAny(symb);//от конца предложения находим первое вхождение точки
+             offers[i] = offers[i].Substring(index + 2);//обрезаем строку массива получая искомое предложение
+             Console.WriteLine($"{offers[i]}{x}");
+            }
+       
     }
-    //foreach (string r in offers)
-    //    Console.WriteLine($"{r.Trim()}\n");
+    
 }
 //Выводит на экран только предложения, не содержащие запятых.
 static void NoCommaSentence(string text)
