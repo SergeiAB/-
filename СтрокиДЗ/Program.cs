@@ -28,14 +28,14 @@ if (itemConsole == 1)
     {
         Console.Write("Загрузить текстовый файл: ");
        strPath = IsString(Console.ReadLine()).Trim();
-        if (File.Exists(strPath)||Directory.Exists(strPath))
+        if (File.Exists(strPath))
         {
             Text = System.IO.File.ReadAllText(strPath);
             Flag = false;
         }
         else
         {
-            Console.WriteLine($"Неправильно указан путь \"{strPath}\" или файл не существует!!! ");
+            Console.WriteLine($"Неправильно указан путь \"{strPath}\" или файл не существует!!!");
             Flag = true;
         }
             
